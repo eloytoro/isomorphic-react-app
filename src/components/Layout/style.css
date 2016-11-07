@@ -1,0 +1,171 @@
+.layout {
+  display: flex;
+  box-sizing: border-box;
+}
+
+.wrap {
+  flex-wrap: wrap;
+}
+
+.fill {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.flex {
+  box-sizing: border-box;
+}
+
+.flex-initial {
+  composes: flex;
+  flex: 1;
+}
+
+@define-mixin size $name, $size {
+  .layout-row > .flex-$(name) {
+    max-width: $(size);
+    max-height: 100%;
+  }
+
+  .layout-column > .flex-$(name) {
+    max-height: $(size);
+    max-width: 100%;
+  }
+
+  .flex-$(name) {
+    composes: flex;
+    flex: 1 1 $(size);
+  }
+}
+
+@define-mixin dimension $name, $size, $grow: 1, $shrink: 1 {
+  .flex-$(name) {
+    composes: flex;
+    flex: $(grow) $(shrink) $(size);
+  }
+}
+
+.align-parallel-start {
+  justify-content: flex-start;
+}
+
+.align-parallel-center {
+  justify-content: center;
+}
+
+.align-parallel-end {
+  justify-content: flex-end;
+}
+
+.align-parallel-space-around {
+  justify-content: space-around;
+}
+
+.align-parallel-space-between {
+  justify-content: space-between;
+}
+
+.align-perpendicular-start {
+  align-content: flex-start;
+  align-items:   flex-start;
+}
+
+.align-perpendicular-center {
+  align-content: center;
+  align-items:   center;
+}
+
+.align-perpendicular-end {
+  align-content: flex-end;
+  align-items:   flex-end;
+}
+
+.align-perpendicular-stretch {
+  align-content: stretch;
+  align-items:   stretch;
+}
+
+.layout-row {
+  composes: layout;
+  flex-direction: row;
+}
+
+.layout-row-reverse {
+  composes: layout;
+  flex-direction: row-reverse;
+}
+
+.layout-rtl {
+  composes: layout;
+  flex-direction: row;
+}
+
+.layout-rtl-reverse {
+  composes: layout;
+  flex-direction: row-reverse;
+}
+
+:global(.rtl) {
+  .layout-rtl {
+    flex-direction: row-reverse;
+  }
+
+  .layout-rtl-reverse {
+    flex-direction: row;
+  }
+}
+
+.layout-column {
+  composes: layout;
+  flex-direction: column;
+}
+
+.layout-column-reverse {
+  composes: layout;
+  flex-direction: column-reverse;
+}
+
+@mixin size 0,   0%;
+@mixin size 5,   5%;
+@mixin size 10,  10%;
+@mixin size 15,  15%;
+@mixin size 20,  20%;
+@mixin size 25,  25%;
+@mixin size 30,  30%;
+@mixin size 35,  35%;
+@mixin size 40,  40%;
+@mixin size 45,  45%;
+@mixin size 50,  50%;
+@mixin size 55,  55%;
+@mixin size 60,  60%;
+@mixin size 65,  65%;
+@mixin size 70,  70%;
+@mixin size 75,  75%;
+@mixin size 80,  80%;
+@mixin size 85,  85%;
+@mixin size 90,  90%;
+@mixin size 95,  95%;
+@mixin size 100, 100%;
+
+@mixin size 33, 33.33%;
+@mixin size 66, 66.66%;
+
+@mixin dimension auto,     auto;
+@mixin dimension grow,     100%, 1, 1;
+@mixin dimension nogrow,   0%,   0, 1;
+@mixin dimension noshrink, auto, 1, 0;
+
+@for $value from -20 to 20 {
+  .flex-order-$(value) {
+    order: $(value);
+  }
+}
+
+.container {
+  position: relative;
+  > .layout {
+    width: 100%;
+    position: absolute;
+  }
+}

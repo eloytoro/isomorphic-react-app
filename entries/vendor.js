@@ -1,0 +1,12 @@
+require('react');
+require('react-dom');
+require('redux-saga/effects');
+require('redux-saga');
+require('classnames');
+require('redux-form');
+require('moment');
+require('react-redux');
+require('react-intl');
+require('redux');
+require('react-router');
+require('history');

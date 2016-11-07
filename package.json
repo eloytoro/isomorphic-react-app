@@ -1,0 +1,142 @@
+{
+  "name": "isomorphic-react-app",
+  "version": "0.1.0",
+  "private": true,
+  "devDependencies": {
+    "add-asset-html-webpack-plugin": "^1.0.2",
+    "autoprefixer": "6.5.1",
+    "babel-core": "6.17.0",
+    "babel-eslint": "7.0.0",
+    "babel-loader": "6.2.5",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.18.0",
+    "babel-preset-react-app": "^1.0.0",
+    "bundle-loader": "^0.5.4",
+    "case-sensitive-paths-webpack-plugin": "1.1.4",
+    "chai": "^3.5.0",
+    "chai-as-promised": "^6.0.0",
+    "chalk": "1.1.3",
+    "connect-history-api-fallback": "1.3.0",
+    "copy-webpack-plugin": "^4.0.0",
+    "cross-spawn": "4.0.2",
+    "css-loader": "0.25.0",
+    "detect-port": "1.0.1",
+    "enzyme": "^2.5.1",
+    "eslint": "3.8.1",
+    "eslint-loader": "1.6.0",
+    "eslint-plugin-import": "2.0.1",
+    "eslint-plugin-jsx-a11y": "2.2.3",
+    "eslint-plugin-react": "6.4.1",
+    "extract-text-webpack-plugin": "^2.0.0-beta.4",
+    "file-loader": "0.9.0",
+    "filesize": "3.3.0",
+    "find-cache-dir": "0.1.1",
+    "fs-extra": "0.30.0",
+    "gulp": "github:gulpjs/gulp#4.0",
+    "gzip-size": "3.0.0",
+    "html-webpack-plugin": "2.24.0",
+    "http-proxy-middleware": "0.17.2",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^17.0.0",
+    "jsdom": "8.4.1",
+    "json-loader": "0.5.4",
+    "mocha": "^3.1.2",
+    "object-assign": "4.1.0",
+    "object-hash": "^1.1.5",
+    "path-exists": "2.1.0",
+    "postcss-loader": "1.0.0",
+    "precss": "^1.4.0",
+    "promise": "7.1.1",
+    "react-addons-test-utils": "^15.3.2",
+    "react-dev-utils": "^0.3.0",
+    "recursive-readdir": "2.1.0",
+    "requiredir": "^1.0.7",
+    "rimraf": "2.5.4",
+    "script-loader": "^0.7.0",
+    "sinon": "2.0.0-pre",
+    "sinon-chai": "^2.8.0",
+    "source-map-support": "^0.4.6",
+    "strip-ansi": "3.0.1",
+    "style-loader": "0.13.1",
+    "url-loader": "0.5.7",
+    "webpack": "2.1.0-beta.25",
+    "webpack-dev-server": "2.1.0-beta.10",
+    "webpack-manifest-plugin": "1.1.0",
+    "webpack-md5-hash": "^0.0.5",
+    "webpack-node-externals": "^1.5.4",
+    "whatwg-fetch": "1.0.0"
+  },
+  "dependencies": {
+    "babel-polyfill": "^6.16.0",
+    "camelize": "^1.0.0",
+    "classnames": "^2.2.5",
+    "history": "^4.3.0",
+    "matchmedia-polyfill": "^0.3.0",
+    "mobile-detect": "^1.3.4",
+    "moment": "^2.15.2",
+    "react": "^15.3.2",
+    "react-dom": "^15.3.2",
+    "react-intl": "^2.1.5",
+    "react-redux": "^4.4.5",
+    "react-router": "^3.0.0",
+    "redux": "^3.6.0",
+    "redux-devtools-extension": "^1.0.0",
+    "redux-form": "^6.1.1",
+    "redux-saga": "^0.12.0"
+  },
+  "scripts": {
+    "start": "NODE_ENV=development gulp start:app",
+    "start:test": "NODE_ENV=test gulp start:test",
+    "build": "NODE_ENV=production gulp build:app",
+    "build:vendor": "NODE_ENV=production gulp build:vendor",
+    "build:server": "NODE_ENV=production gulp build:server",
+    "test": "jest"
+  },
+  "babel": {
+    "presets": [
+      "react-app"
+    ],
+    "env": {
+      "test": {
+        "plugins": [
+          "transform-es2015-modules-commonjs"
+        ]
+      }
+    }
+  },
+  "eslintConfig": {
+    "parser": "babel-eslint",
+    "env": {
+      "browser": true,
+      "node": true
+    },
+    "settings": {
+      "import/parser": "webpack"
+    },
+    "plugins": [
+      "react"
+    ],
+    "extends": [
+      "eslint:recommended",
+      "plugin:react/recommended"
+    ],
+    "rules": {
+      "no-console": [
+        0
+      ]
+    }
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js"
+    ],
+    "moduleDirectories": [
+      "node_modules",
+      "bower_components",
+      "src"
+    ],
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/config/jest/fileMock.js",
+      "\\.(css|less)$": "identity-obj-proxy"
+    }
+  }
+}
