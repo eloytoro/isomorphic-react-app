@@ -11,6 +11,7 @@ const host = 'localhost';
 const protocol = 'http';
 
 app.use('/static', express.static(path.join(paths.appBuild, '/static')));
+app.use('/favicon.ico', express.static(path.join(paths.appBuild, '/favicon.ico')));
 app.get('*', handleRender);
 
 

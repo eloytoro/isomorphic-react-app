@@ -18,11 +18,12 @@ export const propToClass = (prefix, prop, screen = {}) => {
     );
   }
 
-  const className = style[snakeCase(prefix, prop)];
+  const styleName = snakeCase(prefix, prop);
+  const className = style[styleName];
 
   if (className === undefined) {
     const isProduction = process && process.env.NODE_ENV === 'production';
-    if (!isProduction) throw new TypeError('Invalid layout');
+    if (!isProduction) throw new TypeError(`Invalid layout ${styleName}`);
     return [];
   }
 

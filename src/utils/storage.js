@@ -25,5 +25,5 @@ const createStorage = () => {
   };
 };
 
-export const sessionStorage = window.sessionStorage || createStorage();
-export const localStorage = window.localStorage || createStorage();
+export const sessionStorage = __CLIENT__ && window.sessionStorage || createStorage();
+export const localStorage = __CLIENT__ && window.localStorage || createStorage();

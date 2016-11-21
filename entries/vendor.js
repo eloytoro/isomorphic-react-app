@@ -1,7 +1,10 @@
 require('react');
 require('react-dom');
 require('redux-saga/effects');
+require('matchmedia-polyfill');
+require('camelize');
 require('redux-saga');
+require('lodash');
 require('classnames');
 require('redux-form');
 require('moment');
@@ -9,4 +12,6 @@ require('react-redux');
 require('react-intl');
 require('redux');
 require('react-router');
+require('react-router-redux');
+require('redux-devtools-extension');
 require('history');

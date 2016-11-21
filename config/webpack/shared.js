@@ -93,6 +93,7 @@ export const getEntries = ({
 
 export const getLoaders = ({
   minimize,
+  browser,
   hmr
 }) => condArray(
   // Process JS with Babel.
@@ -166,12 +167,13 @@ export const getLoaders = ({
     // In production, we use a plugin to extract that CSS to a file, but
     // in development "style" loader enables hot editing of CSS.
     loader: 'style!css?modules&importLoaders=1&localIdentName=[local]--[hash:base64:6]!postcss'
-  }]
+  }],
 );
 
 export const getPlugins = ({
   minimize,
-  hmr
+  hmr,
+  browser
 }) => condArray(
   [minimize, [
     new webpack.optimize.DedupePlugin(),
@@ -190,7 +192,10 @@ export const getPlugins = ({
       }
     }),
     // Note: this won't work without ExtractTextPlugin.extract(..) in `loaders`.
-    new ExtractTextPlugin('static/css/[name].[contenthash:8].css'),
+    new ExtractTextPlugin({
+      filename: 'static/css/[name].css',
+      allChunks: true
+    }),
 
     new CopyWebpackPlugin([{
       from: paths.appPublic
@@ -217,6 +222,10 @@ export const getPlugins = ({
     options: {
       postcss: postcss
     }
+  }),
+  new webpack.DefinePlugin({
+    __CLIENT__: browser,
+    __SERVER__: !browser
   }),
   new WebpackMd5HashPlugin()
 );
