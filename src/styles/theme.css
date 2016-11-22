@@ -1,3 +1,5 @@
-.title {
-  font-family: 'BigNoodleTitling';
+:global {
+ .title {
+    font-family: 'BigNoodleTitling';
+  }
 }

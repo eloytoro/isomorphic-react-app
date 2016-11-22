@@ -1,5 +1,6 @@
 import webpack from 'webpack';
 import fs from 'fs';
+import path from 'path';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import nodeExternals from 'webpack-node-externals';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
@@ -91,6 +92,22 @@ export const getEntries = ({
   ]]
 );
 
+const extractStyle = new ExtractTextPlugin({
+  filename: 'static/css/main.css',
+  allChunks: true
+});
+
+const extractTheme = new ExtractTextPlugin({
+  filename: 'static/css/theme.css'
+});
+
+const extractConfig = {
+  fallbackLoader: 'style',
+  loader: 'css?modules&importLoaders=1&-autoprefixer!postcss'
+};
+
+const themeCssPath = path.join(paths.appSrc, 'styles/theme.css');
+
 export const getLoaders = ({
   minimize,
   browser,
@@ -143,8 +160,9 @@ export const getLoaders = ({
   // tags. If you use code splitting, however, any async bundles will still
   // use the "style" loader inside the async code so CSS from them won't be
   // in the main CSS file.
-  [minimize, {
+  [minimize, [{
     test: /\.css$/,
+    exclude: themeCssPath,
     // "?-autoprefixer" disables autoprefixer in css-loader itself:
     // https://github.com/webpack/css-loader/issues/281
     // We already have it thanks to postcss. We only pass this flag in
@@ -153,12 +171,12 @@ export const getLoaders = ({
     // Webpack 1.x uses Uglify plugin as a signal to minify *all* the assets
     // including CSS. This is confusing and will be removed in Webpack 2:
     // https://github.com/webpack/webpack/issues/283
-    loader: ExtractTextPlugin.extract({
-      fallbackLoader: 'style',
-      loader: 'css?modules&importLoaders=1&-autoprefixer!postcss'
-    })
-    // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
-  }],
+    loader: extractStyle.extract(extractConfig)
+  }, {
+    test: /\.css$/,
+    include: themeCssPath,
+    loader: extractTheme.extract(extractConfig)
+  }]],
   [!minimize, {
     test: /\.css$/,
     // "postcss" loader applies autoprefixer to our CSS.
@@ -191,12 +209,8 @@ export const getPlugins = ({
         screw_ie8: true
       }
     }),
-    // Note: this won't work without ExtractTextPlugin.extract(..) in `loaders`.
-    new ExtractTextPlugin({
-      filename: 'static/css/[name].css',
-      allChunks: true
-    }),
-
+    extractStyle,
+    extractTheme,
     new CopyWebpackPlugin([{
       from: paths.appPublic
     }])
