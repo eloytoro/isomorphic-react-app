@@ -7,7 +7,7 @@ const openBrowser = require('react-dev-utils/openBrowser');
 
 const app = express();
 const port = 3000;
-const host = 'localhost';
+const host = '0.0.0.0';
 const protocol = 'http';
 
 app.use('/static', express.static(path.join(paths.appBuild, '/static')));
