@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
+    "@kadira/storybook": "^2.32.1",
     "add-asset-html-webpack-plugin": "^1.0.2",
     "autoprefixer": "6.5.1",
     "babel-core": "6.17.0",
@@ -93,6 +94,7 @@
     "build": "NODE_ENV=production gulp build:app",
     "build:vendor": "NODE_ENV=production gulp build:vendor",
     "build:server": "NODE_ENV=production gulp build:server",
+    "storybook": "start-storybook -c ./config/storybook -p 8082 -h 0.0.0.0",
     "test": "jest"
   },
   "babel": {

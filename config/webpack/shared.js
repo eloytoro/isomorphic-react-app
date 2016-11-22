@@ -15,7 +15,7 @@ import findCacheDir from 'find-cache-dir';
 import getClientEnvironment from '../env';
 
 // We use PostCSS for autoprefixing only.
-const postcss = () => [
+export const postcss = () => [
   autoprefixer({
     browsers: [
       '>1%',
