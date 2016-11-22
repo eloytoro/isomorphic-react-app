@@ -1,6 +1,6 @@
 import { ADD, SUBTRACT } from 'constants/types';
-import { createAction } from 'utils/redux';
+import { createAsyncAction } from 'utils/redux';
 
 
-export const add = createAction(ADD);
-export const subtract = createAction(SUBTRACT);
+export const add = createAsyncAction(ADD);
+export const subtract = createAsyncAction(SUBTRACT);

@@ -1,7 +1,7 @@
 import createStore from 'store';
 import createSagaMiddleware from 'redux-saga';
 import render from 'sagas/render';
-import './index.css';
+import 'styles/index.css';
 
 
 const sagaMiddleware = createSagaMiddleware();

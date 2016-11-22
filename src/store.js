@@ -1,6 +1,7 @@
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { routerReducer } from 'react-router-redux';
+import { asyncMiddleware } from 'utils/redux';
 import camelize from 'camelize';
 
 
@@ -21,7 +22,7 @@ const mainReducer = combineReducers({
 
 
 export default (initialState, sagaMiddleware) => {
-  const middlewares = [sagaMiddleware];
+  const middlewares = [asyncMiddleware, sagaMiddleware];
 
   return createStore(
     mainReducer,

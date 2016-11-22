@@ -1,27 +1,27 @@
 import React, { Component, PropTypes } from 'react';
-import logo from './logo.svg';
+import logo from 'assets/images/logo.svg';
 import { connect } from 'react-redux';
 import * as counterActions from 'actions/counter';
 import { Layout } from 'components/Layout';
+import Button from 'components/Button';
 import style from './style.css';
 
 
 class App extends Component {
   render() {
     return (
-      <Layout fill className={style.container} direction={{ '> small': 'column', 'small': 'row' }}>
-        <div className={style.header}>
+      <Layout fill direction="column">
+        <Layout className={style.header} align="start center">
           <img src={logo} className={style.logo} alt="logo" />
-          <h2>Welcome to React</h2>
-        </div>
-        <p className={style.intro}>
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-        <p className={style.intro}>
+          <h1>ISOMORPHIC REACT APP</h1>
+        </Layout>
+        <Layout direction="column" size="auto" align="center center">
           Count: {this.props.count}
-          <button onClick={this.props.add}>{'+'}</button>
-          <button onClick={this.props.subtract}>{'-'}</button>
-        </p>
+          <Layout className={style.intro} align="space-around center">
+            <Button onClick={this.props.subtract}>{'-'}</Button>
+            <Button onClick={this.props.add}>{'+'}</Button>
+          </Layout>
+        </Layout>
       </Layout>
     );
   }

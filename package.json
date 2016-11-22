@@ -84,7 +84,8 @@
     "redux": "^3.6.0",
     "redux-devtools-extension": "^1.0.0",
     "redux-form": "^6.1.1",
-    "redux-saga": "^0.12.0"
+    "redux-saga": "^0.12.0",
+    "webfontloader": "^1.6.26"
   },
   "scripts": {
     "start": "NODE_ENV=development gulp start:app",

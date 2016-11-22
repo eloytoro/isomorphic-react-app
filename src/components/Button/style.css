@@ -1,0 +1,13 @@
+.button {
+  user-select: none;
+  min-width: 60px;
+  cursor: pointer;
+  padding: 8px;
+  color: white;
+  background: #007fff;
+}
+
+.button:disabled, .button[disabled] {
+  cursor: not-allowed;
+  background: #444;
+}

@@ -15,3 +15,4 @@ require('react-router');
 require('react-router-redux');
 require('redux-devtools-extension');
 require('history');
+require('webfontloader');

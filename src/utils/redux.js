@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import { defer } from 'utils';
 
 
 export const createReducer = (initialState, actionHandlers, strict = false) => {
@@ -17,3 +18,18 @@ export const createAction = (actionType, payloadCreator = _.identity) => (...arg
   type: actionType,
   payload: payloadCreator(...args)
 });
+
+export const createAsyncAction = (actionType, payloadCreator = _.identity) => (...args) => ({
+  type: actionType,
+  payload: payloadCreator(...args),
+  meta: defer()
+});
+
+export const resolve = (action) => _.get(action, 'meta.resolve', _.noop)();
+export const reject = (action) => _.get(action, 'meta.reject', _.noop)();
+export const asyncMiddleware = () => (next) => (action) => {
+  const promise = _.get(action, 'meta.promise');
+  const digested = next(action);
+  if (!promise) return digested;
+  return promise;
+};
