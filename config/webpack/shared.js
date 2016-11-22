@@ -1,5 +1,4 @@
 import webpack from 'webpack';
-import fs from 'fs';
 import path from 'path';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import nodeExternals from 'webpack-node-externals';
@@ -11,7 +10,6 @@ import url from 'url';
 import paths from '../paths';
 import autoprefixer from 'autoprefixer';
 import precss from 'precss';
-import findCacheDir from 'find-cache-dir';
 import getClientEnvironment from '../env';
 
 // We use PostCSS for autoprefixing only.
@@ -110,8 +108,6 @@ const themeCssPath = path.join(paths.appSrc, 'styles/theme.css');
 
 export const getLoaders = ({
   minimize,
-  browser,
-  hmr
 }) => condArray(
   // Process JS with Babel.
   {

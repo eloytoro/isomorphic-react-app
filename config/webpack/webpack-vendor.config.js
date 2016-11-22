@@ -1,4 +1,5 @@
 import path from 'path';
+import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import webpack from 'webpack';
 import paths from '../paths';
 import { publicUrl, getLoaders, getPlugins } from './shared';
@@ -34,6 +35,11 @@ export default (args = {}) => ({
   plugins: [
     ...getPlugins(args),
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+    new BundleAnalyzerPlugin({
+      analyzerMode: 'static',
+      openAnalyzer: false,
+      reportFilename: '../vendor-report.html'
+    }),
     new webpack.DllPlugin({
       path: path.join(paths.vendorBuild, '[name]-manifest.json'),
       context: paths.appSrc,

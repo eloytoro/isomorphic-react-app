@@ -4,7 +4,6 @@ require('redux-saga/effects');
 require('matchmedia-polyfill');
 require('camelize');
 require('redux-saga');
-require('lodash');
 require('classnames');
 require('redux-form');
 require('moment');

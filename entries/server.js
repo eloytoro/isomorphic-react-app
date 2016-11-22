@@ -27,11 +27,10 @@ const interpolate = (app, state) => index
 
 const detectUserAgent = (req) => {
   const md = new MobileDetect(req.headers['user-agent']);
-  provider.setup({ mobile: md.mobile(), tablet: md.tablet() });
+  return { isMobile: md.mobile(), isTablet: md.tablet() };
 };
 
 const sendError = (res, error) => {
-  console.error(error);
   res.status(500).send(error.message);
 };
 
@@ -39,34 +38,35 @@ if (typeof require.ensure !== 'function') require.ensure = (d, c) => c(require)
 
 export const handleRender = (req, res) => {
   if (!req.accepts('text/html')) return;
-  detectUserAgent(req);
+  const { isMobile, isTablet } = detectUserAgent(req);
+  provider.setup({ mobile: isMobile, tablet: isTablet });
   const sagaMiddleware = createSagaMiddleware();
   const store = createStore({ counter: 12 }, sagaMiddleware);
-  match({ routes, location: req.url }, (error, redirectLocation, renderProps) => {
+  match({ routes, location: req.url }, async (error, redirectLocation, renderProps) => {
     if (error) {
       sendError(res, error);
     } else if (redirectLocation) {
       res.redirect(302, redirectLocation.pathname + redirectLocation.search)
     } else if (renderProps) {
-      sagaMiddleware.run(load).done
-        .then(() => {
-          const app = renderToString(
-            <Provider store={store}>
-              <RouterContext {...renderProps} />
-            </Provider>
-          );
-          const document = interpolate(app, store.getState());
-          res.send(document);
-        })
-        .catch((error) => sendError(res, error));
+      try {
+        if (!isMobile && !isTablet) {
+          await sagaMiddleware.run(load).done;
+        }
+
+        const app = renderToString(
+          <Provider store={store}>
+            <RouterContext {...renderProps} />
+          </Provider>
+        );
+
+        const document = interpolate(app, store.getState());
+        res.send(document);
+      } catch (error) {
+        sendError(res, error);
+      }
     } else {
       // NOTE: this might never happen
       res.status(404).send('Not Found');
     }
   });
 };
-
-process.on('unhandledRejection', (reason, promise) => {
-  console.log(promise);
-  console.log('Reason', reason);
-});

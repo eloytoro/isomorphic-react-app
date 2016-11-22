@@ -1,5 +1,6 @@
 import path from 'path';
 import webpack from 'webpack';
+import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import AddAssetHtmlPlugin from 'add-asset-html-webpack-plugin';
 import ManifestPlugin from 'webpack-manifest-plugin';
@@ -9,7 +10,6 @@ import {
   condArray,
   publicPath,
   publicUrl,
-  getExternals,
   getLoaders,
   getPlugins,
   getEntries,
@@ -65,6 +65,15 @@ export default (args = {}) => ({
 
   plugins: condArray(
     ...getPlugins(args),
+    new BundleAnalyzerPlugin({
+      analyzerMode: 'static',
+      openAnalyzer: false,
+      reportFilename: '../app-report.html'
+    }),
+    // new webpack.optimize.CommonsChunkPlugin({
+    //   name: 'commons',
+    //   filename: 'static/js/commons.js'
+    // }),
     new webpack.DllReferencePlugin({
       context: paths.appSrc,
       manifest: require(path.join(paths.vendorBuild, 'vendor-manifest.json'))

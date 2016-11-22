@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import { call, fork } from 'redux-saga/effects';
 import { Router } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
-import { browserHistory } from 'react-router';
+import { match, browserHistory } from 'react-router';
 import routes from 'routes';
 import load from './load';
 import counter from './counter';
@@ -20,14 +20,17 @@ export const loadFonts = () => {
 
 export const renderDOM = (store) => {
   const history = syncHistoryWithStore(browserHistory, store);
-  ReactDOM.render(
-    (
-      <Provider store={store}>
-        <Router history={history} routes={routes} />
-      </Provider>
-    ),
-    document.getElementById('root')
-  );
+  const { pathname, search } = window.location;
+  match({ routes, location: `${pathname}${search}` }, () => {
+    ReactDOM.render(
+      (
+        <Provider store={store}>
+          <Router history={history} routes={routes} />
+        </Provider>
+      ),
+      document.getElementById('root')
+    );
+  });
 };
 
 export default function* render(store) {
