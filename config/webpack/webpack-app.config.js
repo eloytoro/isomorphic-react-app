@@ -132,8 +132,5 @@ export default (args = {}) => ({
     fs: 'empty',
     net: 'empty',
     tls: 'empty'
-  },
-  externals: {
-    'app-config': 'APP_CONFIG'
   }
 });

@@ -10,6 +10,7 @@ import { match, RouterContext } from 'react-router';
 import { Provider } from 'react-redux';
 import createSagaMiddleware from 'redux-saga';
 import load from 'sagas/load';
+import _ from 'lodash';
 import routes from 'routes';
 
 const index = fs.readFileSync(path.join(paths.appBuild, 'index.html'), 'utf-8');
@@ -30,6 +31,10 @@ const detectUserAgent = (req) => {
   return { isMobile: md.mobile(), isTablet: md.tablet() };
 };
 
+const setupConfig = (req) => {
+  global.APP_CONFIG = { title: 'FUCK' };
+};
+
 const sendError = (res, error) => {
   res.status(500).send(error.message);
 };
@@ -38,6 +43,7 @@ if (typeof require.ensure !== 'function') require.ensure = (d, c) => c(require)
 
 export const handleRender = (req, res) => {
   if (!req.accepts('text/html')) return;
+  setupConfig(req);
   const { isMobile, isTablet } = detectUserAgent(req);
   provider.setup({ mobile: isMobile, tablet: isTablet });
   const sagaMiddleware = createSagaMiddleware();

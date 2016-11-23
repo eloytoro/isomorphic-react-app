@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react';
-import config from 'app-config';
 import logo from 'assets/images/logo.svg';
 import { connect } from 'react-redux';
 import * as counterActions from 'actions/counter';
@@ -14,7 +13,7 @@ class App extends Component {
       <Layout fill direction="column">
         <Layout className={style.header} align="start center">
           <img src={logo} className={style.logo} alt="logo" />
-          <h1>{config.title}</h1>
+          <h1>{APP_CONFIG.title}</h1>
         </Layout>
         <Layout direction="column" size="auto" align="center center">
           Count: {this.props.count}
