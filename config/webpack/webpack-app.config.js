@@ -111,6 +111,14 @@ export default (args = {}) => ({
       hash: true,
       includeSourcemap: true
     }),
+
+    new AddAssetHtmlPlugin({
+      filepath: paths.config,
+      outputPath: 'static/js',
+      publicPath: '/static/js',
+      hash: true,
+      includeSourcemap: false
+    }),
     // Generate a manifest file which contains a mapping of all asset filenames
     // to their corresponding output file so that tools can pick it up without
     // having to parse `index.html`.
@@ -124,5 +132,8 @@ export default (args = {}) => ({
     fs: 'empty',
     net: 'empty',
     tls: 'empty'
+  },
+  externals: {
+    'app-config': 'APP_CONFIG'
   }
 });

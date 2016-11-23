@@ -34,6 +34,7 @@ module.exports = {
   vendorBuild: resolveApp(`build/vendor-${suffix}`),
   lockfile: resolveApp(`build/client-deps-${suffix}.lock`),
   polyfills: resolveApp('entries/polyfills.js'),
+  config: resolveApp('entries/config.js'),
   appPublic: resolveApp('public'),
   appHtml: resolveApp('public/index.html'),
   appIndexJs: resolveApp('src/index.js'),
