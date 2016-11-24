@@ -2,7 +2,7 @@ import path from 'path';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import webpack from 'webpack';
 import paths from '../paths';
-import { publicUrl, getLoaders, getPlugins } from './shared';
+import { publicUrl, getLoaders, getPlugins, condArray } from './shared';
 
 
 // This is the production configuration.
@@ -32,20 +32,20 @@ export default (args = {}) => ({
   module: {
     loaders: getLoaders(args)
   },
-  plugins: [
+  plugins: condArray(
     ...getPlugins(args),
-    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
-    new BundleAnalyzerPlugin({
+    [args.minimize, new BundleAnalyzerPlugin({
       analyzerMode: 'static',
       openAnalyzer: false,
       reportFilename: '../vendor-report.html'
-    }),
+    })],
+    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     new webpack.DllPlugin({
       path: path.join(paths.vendorBuild, '[name]-manifest.json'),
       context: paths.appSrc,
       name: '[name]_[hash]'
     })
-  ],
+  ),
   // Some libraries import Node modules but don't use them in the browser.
   // Tell Webpack to provide empty mocks for them so importing them works.
   node: {

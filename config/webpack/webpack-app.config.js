@@ -65,11 +65,11 @@ export default (args = {}) => ({
 
   plugins: condArray(
     ...getPlugins(args),
-    new BundleAnalyzerPlugin({
+    [args.minimize, new BundleAnalyzerPlugin({
       analyzerMode: 'static',
       openAnalyzer: false,
       reportFilename: '../app-report.html'
-    }),
+    })],
     // new webpack.optimize.CommonsChunkPlugin({
     //   name: 'commons',
     //   filename: 'static/js/commons.js'
