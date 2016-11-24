@@ -158,6 +158,7 @@ export const getLoaders = ({
   // in the main CSS file.
   [minimize, [{
     test: /\.css$/,
+    include: paths.appSrc,
     exclude: themeCssPath,
     // "?-autoprefixer" disables autoprefixer in css-loader itself:
     // https://github.com/webpack/css-loader/issues/281
@@ -172,16 +173,28 @@ export const getLoaders = ({
     test: /\.css$/,
     include: themeCssPath,
     loader: extractTheme.extract(extractConfig)
-  }]],
-  [!minimize, {
+  }, {
     test: /\.css$/,
+    include: paths.appNodeModules,
+    loader: extractStyle.extract({
+      fallbackLoader: 'style',
+      loader: 'css'
+    })
+  }]],
+  [!minimize, [{
+    test: /\.css$/,
+    include: paths.appSrc,
     // "postcss" loader applies autoprefixer to our CSS.
     // "css" loader resolves paths in CSS and adds assets as dependencies.
     // "style" loader turns CSS into JS modules that inject <style> tags.
     // In production, we use a plugin to extract that CSS to a file, but
     // in development "style" loader enables hot editing of CSS.
     loader: 'style!css?modules&importLoaders=1&localIdentName=[local]--[hash:base64:6]&camelCase!postcss'
-  }],
+  }, {
+    test: /\.css$/,
+    include: paths.appNodeModules,
+    loader: 'style!css'
+  }]],
 );
 
 export const getPlugins = ({
