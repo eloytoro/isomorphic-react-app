@@ -8,4 +8,8 @@ import 'styles/theme.css';
 const sagaMiddleware = createSagaMiddleware();
 const store = createStore(window.__PRELOADED_STATE__, sagaMiddleware);
 
-sagaMiddleware.run(render, store);
+const renderApp = window.RENDER_APP = () => {
+  sagaMiddleware.run(render, store);
+};
+
+renderApp();
