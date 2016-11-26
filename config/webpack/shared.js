@@ -101,7 +101,7 @@ const extractTheme = new ExtractTextPlugin({
 
 const extractConfig = {
   fallbackLoader: 'style',
-  loader: 'css?modules&importLoaders=1&-autoprefixer!postcss'
+  loader: 'css?modules&importLoaders=1&-autoprefixer&camelCase!postcss'
 };
 
 const themeCssPath = path.join(paths.appSrc, 'styles/theme.css');
@@ -180,7 +180,7 @@ export const getLoaders = ({
     // "style" loader turns CSS into JS modules that inject <style> tags.
     // In production, we use a plugin to extract that CSS to a file, but
     // in development "style" loader enables hot editing of CSS.
-    loader: 'style!css?modules&importLoaders=1&localIdentName=[local]--[hash:base64:6]!postcss'
+    loader: 'style!css?modules&importLoaders=1&localIdentName=[local]--[hash:base64:6]&camelCase!postcss'
   }],
 );
 
