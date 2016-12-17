@@ -1,5 +1,5 @@
 import { ADD, SUBTRACT } from 'constants/types';
-import { takeLatest, delay } from 'redux-saga';
+import { takeEvery, delay } from 'redux-saga';
 import { call } from 'redux-saga/effects';
 import { resolve } from 'utils/redux';
 
@@ -10,6 +10,6 @@ export function* restore(action) {
 }
 
 export default function* watch() {
-  yield takeLatest(ADD, restore);
-  yield takeLatest(SUBTRACT, restore);
+  yield takeEvery(ADD, restore);
+  yield takeEvery(SUBTRACT, restore);
 }
