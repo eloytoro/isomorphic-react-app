@@ -16,20 +16,10 @@ class App extends Component {
           <h1>{APP_CONFIG.title}</h1>
         </Layout>
         <Layout direction="column" size="auto" align="center center">
-          <Layout direction="column">
-            Count: {this.props.count}
-            <Layout className={style.intro} align="space-around center">
-              <Button onClick={this.props.subtract}>{'-'}</Button>
-              <Button onClick={this.props.add}>{'+'}</Button>
-              <Button onClick={this.props.add}>{'+'}</Button>
-            </Layout>
-          </Layout>
-          <Layout direction="column">
-            Count: {this.props.count}
-            <Layout className={style.intro} align="space-around center">
-              <Button onClick={this.props.subtract}>{'-'}</Button>
-              <Button onClick={this.props.add}>{'+'}</Button>
-            </Layout>
+          Count: {this.props.count}
+          <Layout className={style.intro} align="space-around center">
+            <Button onClick={this.props.subtract}>{'-'}</Button>
+            <Button onClick={this.props.add}>{'+'}</Button>
           </Layout>
         </Layout>
       </Layout>
