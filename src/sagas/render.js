@@ -1,12 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import WebFont from 'webfontloader';
-import { Provider } from 'react-redux';
 import { call, fork } from 'redux-saga/effects';
-import { Router } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
-import { match, browserHistory } from 'react-router';
-import routes from 'routes';
+import { browserHistory } from 'react-router';
+import { AppContainer } from 'react-hot-loader';
 import load from './load';
 import counter from './counter';
 
@@ -20,17 +18,24 @@ export const loadFonts = () => {
 
 export const renderDOM = (store) => {
   const history = syncHistoryWithStore(browserHistory, store);
-  const { pathname, search } = window.location;
-  match({ routes, location: `${pathname}${search}` }, () => {
+
+  const doRender = () => {
+    const Root = require('pages/Root').default;
     ReactDOM.render(
       (
-        <Provider store={store}>
-          <Router history={history} routes={routes} />
-        </Provider>
+        <AppContainer>
+          <Root store={store} history={history} />
+        </AppContainer>
       ),
       document.getElementById('root')
     );
-  });
+  };
+
+  doRender();
+
+  if (module.hot) {
+    module.hot.accept('pages/Root', doRender);
+  }
 };
 
 export default function* render(store) {
