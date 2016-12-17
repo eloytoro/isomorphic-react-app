@@ -52,6 +52,7 @@
     "promise": "7.1.1",
     "react-addons-test-utils": "^15.3.2",
     "react-dev-utils": "^0.3.0",
+    "react-hot-loader": "next",
     "recursive-readdir": "2.1.0",
     "requiredir": "^1.0.7",
     "rimraf": "2.5.4",
@@ -105,7 +106,8 @@
       "react-app"
     ],
     "plugins": [
-      "lodash"
+      "lodash",
+      "react-hot-loader/babel"
     ],
     "env": {
       "test": {

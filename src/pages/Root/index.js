@@ -1,10 +1,19 @@
+import React from 'react';
 import { PropTypes } from 'react';
+import { Router } from 'react-router';
+import { Provider } from 'react-redux';
+import routes from 'routes';
 
 
-const Root = ({ children }) => children
+const Root = ({ store, history }) => (
+  <Provider store={store} key={Math.random()}>
+    <Router history={history} routes={routes} />
+  </Provider>
+)
 
 Root.propTypes = {
-  children: PropTypes.node
+  store: PropTypes.object,
+  history: PropTypes.object
 };
 
 export default Root;
