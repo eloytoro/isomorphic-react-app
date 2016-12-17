@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import WebFont from 'webfontloader';
+import Root from 'pages/Root';
 import { call, fork } from 'redux-saga/effects';
 import { syncHistoryWithStore } from 'react-router-redux';
 import { browserHistory } from 'react-router';
 import { AppContainer } from 'react-hot-loader';
-import load from './load';
-import counter from './counter';
+import watchers from './watchers';
 
 export const loadFonts = () => {
   WebFont.load({
@@ -19,29 +19,19 @@ export const loadFonts = () => {
 export const renderDOM = (store) => {
   const history = syncHistoryWithStore(browserHistory, store);
 
-  const doRender = () => {
-    const Root = require('pages/Root').default;
-    ReactDOM.render(
-      (
-        <AppContainer>
-          <Root store={store} history={history} />
-        </AppContainer>
-      ),
-      document.getElementById('root')
-    );
-  };
-
-  doRender();
-
-  if (module.hot) {
-    module.hot.accept('pages/Root', doRender);
-  }
+  ReactDOM.render(
+    (
+      <AppContainer>
+        <Root store={store} history={history} />
+      </AppContainer>
+    ),
+    document.getElementById('root')
+  );
 };
 
 export default function* render(store) {
   yield call(renderDOM, store);
   yield call(loadFonts);
 
-  yield fork(load)
-  yield fork(counter);
+  yield fork(watchers);
 }
