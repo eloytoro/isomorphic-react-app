@@ -1,21 +1,55 @@
+import React from 'react';
+import ReactDOM from 'react-dom';
 import createStore from 'store';
 import createSagaMiddleware from 'redux-saga';
+import { AppContainer } from 'react-hot-loader';
+import Root from 'pages/Root';
+import { syncHistoryWithStore } from 'react-router-redux';
+import { useRouterHistory } from 'react-router';
+import { createHistory } from 'history';
+import WebFont from 'webfontloader';
 import 'styles/index.css';
 import 'styles/theme.css';
 
 
 const sagaMiddleware = createSagaMiddleware();
-let mainTask;
 const store = createStore(window.__PRELOADED_STATE__, sagaMiddleware);
 
-const renderApp = window.RENDER_APP = () => {
+const render = window.RENDER_APP = () => {
   if (mainTask) mainTask.cancel();
-  const render = require('sagas/render').default;
-  mainTask = sagaMiddleware.run(render, store);
+
+  const history = useRouterHistory(createHistory)({
+    basename: '/'
+  });
+
+  const reduxHistory = syncHistoryWithStore(history, store);
+
+  ReactDOM.render(
+    (
+      <AppContainer>
+        <Root store={store} history={reduxHistory} />
+      </AppContainer>
+    ),
+    document.getElementById('root')
+  );
 };
 
-if (module.hot) {
-  module.hot.accept('sagas/render', renderApp);
+let mainTask;
+
+const bootstrap = window.BOOTSTRAP = () => {
+  render();
+  mainTask = sagaMiddleware.run(require('sagas').default);
 }
 
-renderApp();
+WebFont.load({
+  custom: {
+    families: ['BigNoodleTitling']
+  }
+});
+
+bootstrap();
+
+if (module.hot) {
+  module.hot.accept('sagas', bootstrap);
+  module.hot.accept('routes', render);
+}

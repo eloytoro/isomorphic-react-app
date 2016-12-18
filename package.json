@@ -75,7 +75,7 @@
     "babel-polyfill": "^6.16.0",
     "camelize": "^1.0.0",
     "classnames": "^2.2.5",
-    "history": "^4.3.0",
+    "history": "3.x",
     "lodash": "^4.17.2",
     "matchmedia-polyfill": "^0.3.0",
     "mobile-detect": "^1.3.4",
