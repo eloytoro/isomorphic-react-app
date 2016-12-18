@@ -21,14 +21,12 @@ const mainReducer = combineReducers({
 });
 
 
-export default (initialState, sagaMiddleware) => {
-  const middlewares = [asyncMiddleware, sagaMiddleware];
-
+export default (initialState, ...middlewares) => {
   return createStore(
     mainReducer,
     initialState,
     composeWithDevTools(
-      applyMiddleware(...middlewares)
+      applyMiddleware(asyncMiddleware, ...middlewares)
     )
   );
 };
