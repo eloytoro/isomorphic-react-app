@@ -119,7 +119,7 @@
   },
   "eslintConfig": {
     "globals": {
-      "APP_CONFIG": true,
+      "System": true,
       "__CLIENT__": true,
       "__SERVER__": true,
       "Promise": true
