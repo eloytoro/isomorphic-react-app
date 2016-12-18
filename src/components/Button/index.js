@@ -17,6 +17,7 @@ class Button extends React.Component {
 
   handleClick = (event) => {
     if (this.disabled) return;
+    event.persist();
     this.lock();
     Promise.resolve(this.props.onClick(event))
       .then(this.restore)

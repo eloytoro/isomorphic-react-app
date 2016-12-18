@@ -7,10 +7,10 @@ import paths from '../config/paths';
 import path from 'path';
 import { renderToString } from 'react-dom/server'
 import { match, RouterContext } from 'react-router';
-import { Provider } from 'react-redux';
+import Root from 'pages/Root';
 import createSagaMiddleware from 'redux-saga';
 import load from 'sagas/load';
-import _ from 'lodash';
+import { connectRoutes } from 'utils/routes';
 import routes from 'routes';
 
 const index = fs.readFileSync(path.join(paths.appBuild, 'index.html'), 'utf-8');
@@ -31,7 +31,7 @@ const detectUserAgent = (req) => {
   return { isMobile: md.mobile(), isTablet: md.tablet() };
 };
 
-const setupConfig = (req) => {
+const setupConfig = () => {
   global.APP_CONFIG = { title: 'FUCK' };
 };
 
@@ -40,6 +40,7 @@ const sendError = (res, error) => {
 };
 
 if (typeof require.ensure !== 'function') require.ensure = (d, c) => c(require)
+global.System = { import: d => Promise.resolve(require(d)) }
 
 export const handleRender = (req, res) => {
   if (!req.accepts('text/html')) return;
@@ -48,7 +49,10 @@ export const handleRender = (req, res) => {
   provider.setup({ mobile: isMobile, tablet: isTablet });
   const sagaMiddleware = createSagaMiddleware();
   const store = createStore({ counter: 12 }, sagaMiddleware);
-  match({ routes, location: req.url }, async (error, redirectLocation, renderProps) => {
+  match({
+    routes: connectRoutes(routes, store),
+    location: req.url
+  }, async (error, redirectLocation, renderProps) => {
     if (error) {
       sendError(res, error);
     } else if (redirectLocation) {
@@ -60,9 +64,9 @@ export const handleRender = (req, res) => {
         }
 
         const app = renderToString(
-          <Provider store={store}>
+          <Root store={store}>
             <RouterContext {...renderProps} />
-          </Provider>
+          </Root>
         );
 
         const document = interpolate(app, store.getState());
