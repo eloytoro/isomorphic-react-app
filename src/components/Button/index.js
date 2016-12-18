@@ -9,7 +9,6 @@ class Button extends React.Component {
   state = { disabled: false };
 
   restore = () => this.setState({ disabled: false });
-
   lock = () => this.setState({ disabled: true });
 
   get disabled() {
@@ -25,20 +24,26 @@ class Button extends React.Component {
   }
 
   render() {
-    const props = _.omit(this.props, 'onClick', 'className', 'disabled');
+    const buttonClass = classnames(
+      this.props.className,
+      style.button,
+      { [style.buttonActive] : this.props.active }
+    )
     return (
       <Layout
         align="center center"
-        {...props}
-        className={classnames(this.props.className, style.button)}
+        className={buttonClass}
         onClick={this.handleClick}
         disabled={this.disabled}
+        children={this.props.children}
       />
     );
   }
 }
 
 Button.propTypes = {
+  children: PropTypes.node,
+  active: PropTypes.bool,
   onClick: PropTypes.func,
   disabled: PropTypes.bool,
   className: PropTypes.string
