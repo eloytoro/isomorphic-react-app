@@ -1,22 +1,16 @@
 import _ from 'lodash';
-import { createAsyncAction, createAction } from 'utils/redux';
-import InternalError from 'pages/InternalError';
+import { createAsyncAction } from 'utils/redux';
 
 
-export const ROUTE_ERROR = 'ROUTES/ROUTE_ERROR';
 export const ROUTE_ENTER = 'ROUTES/ROUTE_ENTER';
 
 const enterRoute = createAsyncAction(ROUTE_ENTER);
-const routeError = createAction(ROUTE_ERROR);
 
 export const connectRoutes = (store) => {
   const loadAsync = (getComponent) => (prevState, callback) => {
     getComponent()
       .then(module => callback(null, module.default))
-      .catch((err) => {
-        store.dispatch(routeError(err));
-        callback(null, InternalError);
-      });
+      .catch(callback);
   };
 
   const createRoutes = (routes) => {
